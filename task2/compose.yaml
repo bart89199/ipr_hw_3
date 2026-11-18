@@ -1,0 +1,14 @@
+services:
+  app:
+    build: ../app
+    ports:
+      - "${PORT}:8000"
+    volumes:
+      - db-data:/data
+    environment:
+      PORT: 8000
+      GREETING: ${GREETING}
+
+volumes:
+  db-data:
+    name: hw3-sqlite-data

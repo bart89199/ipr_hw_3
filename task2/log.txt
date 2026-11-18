@@ -1,0 +1,26 @@
+docker compose -f task2/compose.yaml up -d
+batr@MacBook-Pro-batr ipr_hw_3 % docker compose -f task2/compose.yaml up -d
+[+] up 3/3
+ ✔ Network task2_default  Created                                                                                                                                                                               0.0s
+ ✔ Volume hw3-sqlite-data Created                                                                                                                                                                               0.0s
+ ✔ Container task2-app-1  Started                                                                                                                                                                               0.1s
+batr@MacBook-Pro-batr ipr_hw_3 % curl -fsS -X POST http://127.0.0.1:8000/increment
+{"greeting": "New hello!!", "count": 1, "hostname": "04f3c169dbc4", "storage": "sqlite"}%
+batr@MacBook-Pro-batr ipr_hw_3 % curl -fsS -X POST http://127.0.0.1:8000/increment
+{"greeting": "New hello!!", "count": 2, "hostname": "04f3c169dbc4", "storage": "sqlite"}%
+batr@MacBook-Pro-batr ipr_hw_3 % curl -fsS -X POST http://127.0.0.1:8000/increment
+{"greeting": "New hello!!", "count": 3, "hostname": "04f3c169dbc4", "storage": "sqlite"}%
+batr@MacBook-Pro-batr ipr_hw_3 % docker compose -f task2/compose.yaml down
+[+] down 2/2
+ ✔ Container task2-app-1 Removed                                                                                                                                                                                3.1s
+ ✔ Network task2_default Removed                                                                                                                                                                                0.1s
+batr@MacBook-Pro-batr ipr_hw_3 % docker compose -f task2/compose.yaml up -d
+[+] up 2/2
+ ✔ Network task2_default Created                                                                                                                                                                                0.0s
+ ✔ Container task2-app-1 Started                                                                                                                                                                                0.1s
+batr@MacBook-Pro-batr ipr_hw_3 % curl -fsS http://127.0.0.1:8000/
+{"greeting": "New hello!!", "count": 3, "hostname": "5de2212ac522", "storage": "sqlite"}%
+batr@MacBook-Pro-batr ipr_hw_3 % docker compose -f task2/compose.yaml down
+[+] down 2/2
+ ✔ Container task2-app-1 Removed                                                                                                                                                                                3.1s
+ ✔ Network task2_default Removed                                                                                                                                                                                0.1s

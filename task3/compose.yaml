@@ -1,0 +1,32 @@
+services:
+  app:
+    build: ../app
+    ports:
+      - "${PORT}:8000"
+    environment:
+      PORT: 8000
+      GREETING: ${GREETING}
+      STORAGE: redis
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:${PORT}/readyz"]
+      interval: 5s
+      timeout: 3s
+      retries: 2
+      start_period: 2s
+  redis:
+    image: redis:7.4-alpine
+    volumes:
+      - db-data:/data
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 5s
+      timeout: 3s
+      retries: 2
+      start_period: 2s
+
+volumes:
+  db-data:
+    name: hw3-redis-data
